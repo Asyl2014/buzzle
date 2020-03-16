@@ -67,6 +67,27 @@ function users(parameters, server, database) {
         });
     });
 
+    server.get('/user', (req, res) => {
+        res.format({
+            'application/json': () => {
+                if (req.session.authorized) {
+                    res.json({
+                        'user': {
+                            'id': req.session.userID,
+                            'login': req.session.login,
+                            'authorized': req.session.authorized,
+                            'administrator': req.session.administrator
+                        }
+                    });
+                } else {
+                    res.json({
+                        'user': null
+                    });
+                }
+            }
+        });
+    });
+
     server.post('/logout', (req, res) => {
         req.session.regenerate(() => {
             res.format({

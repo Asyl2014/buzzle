@@ -50,6 +50,13 @@ if (!dbTimeout) {
 }
 dbTimeout = parseInt(dbTimeout);
 
+let dbSessionHost = process.env.BUZZLE_DB_SESS_HOST;
+if (!dbSessionHost) {
+    dbSessionHost = 'localhost';
+
+    console.warn(`The session database host was not provided. The default value is set to '${dbSessionHost}'.`);
+}
+
 const adminUser = process.env.BUZZLE_ADMIN_USER;
 if (!adminUser) {
     throw new Error('The admin login was not specified. Please add it to the .env file.');
@@ -105,6 +112,7 @@ export default {
     dbPort,
     dbDialect,
     dbTimeout,
+    dbSessionHost,
     adminUser,
     adminPass,
     minLoginLength,

@@ -1,14 +1,22 @@
 import express from 'express'
 import session from 'express-session'
+import redis   from 'redis';
+import connectRedit from 'connect-redis';
 import moment from 'moment'
 
 function serverBuilder(parameters) {
     const server = express();
+    const RedisStore = connectRedit(session);
+    const redisClient = redis.createClient({
+        'host': parameters.dbSessionHost
+    });
+
     server.use(express.static('public'));
     server.use(express.json());
     server.use(express.urlencoded({ extended: false }));
     server.set('view engine', 'ejs');
     server.use(session({
+        store: new RedisStore({ 'client': redisClient }),
         secret: parameters.sessionSecret,
         resave: false,
         saveUninitialized: true

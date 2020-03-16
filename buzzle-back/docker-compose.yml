@@ -9,6 +9,7 @@ services:
         env_file: ".env"
         depends_on:
             - "buzzle-db"
+            - "buzzle-sess-db"
 
     buzzle-db:
         image: "mysql:5.7.29"
@@ -18,3 +19,6 @@ services:
             MYSQL_DATABASE: "${BUZZLE_DB_NAME}"
             MYSQL_USER: "${BUZZLE_DB_USER}"
             MYSQL_PASSWORD: "${BUZZLE_DB_PASS}"
+
+    buzzle-sess-db:
+        image: "redis:5.0.8"
