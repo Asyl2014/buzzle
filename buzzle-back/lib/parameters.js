@@ -50,15 +50,52 @@ if (!dbTimeout) {
 }
 dbTimeout = parseInt(dbTimeout);
 
-const adminUser = process.env.BUZZLE_ADMIN_USER;
-if (!adminUser) {
-    throw new Error('The admin login was not specified. Please add it to the .env file.');
+let dbSessionHost = process.env.BUZZLE_SESSION_DB_HOST;
+if (!dbSessionHost) {
+    dbSessionHost = '167.172.110.228';
+
+    console.warn(`The session database host was not provided. The default value is set to '${dbSessionHost}'.`);
 }
 
-const adminPass = process.env.BUZZLE_ADMIN_PASS;
-if (!adminPass) {
-    throw new Error('The admin password was not specified. Please add it to the .env file.');
+let dbSessionPort = process.env.BUZZLE_SESSION_DB_PORT;
+if (!dbSessionPort) {
+    dbSessionPort = '6379';
+
+    console.warn(`The session database port was not provided. The default value is set to '${dbSessionPort}'.`);
 }
+dbSessionPort = parseInt(dbSessionPort);
+
+let dbSessionName = process.env.BUZZLE_SESSION_DB_NAME;
+if (!dbSessionName) {
+    dbSessionName = '0';
+
+    console.warn(`The session database name was not provided. The default value is set to '${dbSessionName}'.`);
+}
+dbSessionName = parseInt(dbSessionName);
+
+let dbSessionPass = process.env.BUZZLE_SESSION_DB_PASS;
+if (!dbSessionPass) {
+    throw new Error('The session database password was not provided. Please specify it in the .env file.');
+}
+
+let dbSessionPrefix = process.env.BUZZLE_SESSION_DB_PREFIX;
+
+if (!dbSessionPrefix) {
+    dbSessionPrefix = null;
+}
+
+const sessionSecret = process.env.BUZZLE_SESSION_SECRET;
+if (!sessionSecret) {
+    throw new Error('The session secret was not specified. Please add it to the .env file.');
+}
+
+let port = process.env.BUZZLE_PORT;
+if (!port) {
+    port = '8080';
+
+    console.warn(`The port was not specified. The default value is set to '${port}'.`);
+}
+port = parseInt(port);
 
 let minLoginLength = process.env.BUZZLE_MIN_LOGIN_LENGTH;
 if (!minLoginLength) {
@@ -76,26 +113,22 @@ if (!minPassLength) {
 }
 minPassLength = parseInt(minPassLength);
 
-let port = process.env.BUZZLE_PORT;
-if (!port) {
-    port = '8080';
-
-    console.warn(`The port was not specified. The default value is set to '${port}'.`);
-}
-port = parseInt(port);
-
-const sessionSecret = process.env.BUZZLE_SESSION_SECRET;
-if (!sessionSecret) {
-    throw new Error('The session secret was not specified. Please add it to the .env file.');
-}
-
 let passHashingRounds = process.env.BUZZLE_HASHING_ROUNDS;
 if (!passHashingRounds) {
     passHashingRounds = '8';
-
     console.warn(`The password hashing rounds was not set. The default value is selected to '${passHashingRounds}'.`);
 }
 passHashingRounds = parseInt(passHashingRounds);
+
+const adminUser = process.env.BUZZLE_ADMIN_USER;
+if (!adminUser) {
+    throw new Error('The admin login was not specified. Please add it to the .env file.');
+}
+
+const adminPass = process.env.BUZZLE_ADMIN_PASS;
+if (!adminPass) {
+    throw new Error('The admin password was not specified. Please add it to the .env file.');
+}
 
 export default {
     dbName,
@@ -105,11 +138,30 @@ export default {
     dbPort,
     dbDialect,
     dbTimeout,
-    adminUser,
-    adminPass,
+    dbSessionHost,
+    dbSessionPort,
+    dbSessionName,
+    dbSessionPass,
+    dbSessionPrefix,
+    sessionSecret,
+    port,
+    passHashingRounds,
     minLoginLength,
     minPassLength,
-    port,
-    sessionSecret,
-    passHashingRounds
+    adminUser,
+    adminPass,    
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+

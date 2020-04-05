@@ -66,7 +66,27 @@ function users(parameters, server, database) {
             response.status(503).end('Service Unavailable');
         });
     });
-
+    server.get('/user', (req, res) => {
+        res.format({            
+            'application/json': () => {
+                if (req.session.authorized) {
+                    res.json({
+                            'user': {
+                                'id': user.id,
+                                'login': req.session.login,
+                                'authorized': req.session.authorized,
+                                'administrator': req.session.administrator
+                            }
+                    });
+                } else {
+                    res.json({
+                        'user': null
+                    });
+                }
+            }
+        });
+            
+    });
     server.post('/logout', (req, res) => {
         req.session.regenerate(() => {
             res.format({

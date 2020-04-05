@@ -1,17 +1,22 @@
-import express from 'express'
-import session from 'express-session'
-import moment from 'moment'
+import express from 'express';
+import session from 'express-session';
+import connectRedis from 'connect-redis';
+import moment from 'moment';
 
-function serverBuilder(parameters) {
+
+function serverBuilder(parameters, database) {
     const server = express();
+    const RedisStore = connectRedis(session);
+
     server.use(express.static('public'));
     server.use(express.json());
     server.use(express.urlencoded({ extended: false }));
     server.set('view engine', 'ejs');
     server.use(session({
-        secret: parameters.sessionSecret,
-        resave: false,
-        saveUninitialized: true
+        'store': new RedisStore({ 'client': database.sessionConnection }),
+        'secret': parameters.sessionSecret,
+        'resave': false,
+        'saveUninitialized': true
     }));
     server.locals.moment = moment;
     server.handleError = (req, res, data) => {

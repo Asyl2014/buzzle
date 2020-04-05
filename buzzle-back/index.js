@@ -1,8 +1,10 @@
 import parameters from './lib/parameters.js'
-import database from './lib/database.js'
+
+import databaseBuilder from './lib/database.js';
+const database = databaseBuilder(parameters);
 
 import serverBuilder from './lib/server.js'
-const server = serverBuilder(parameters);
+const server = serverBuilder(parameters, database);
 
 import users from './lib/users.js'
 users(parameters, server, database);
