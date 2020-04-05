@@ -20,6 +20,7 @@ the following parameters:
 * `BUZZLE_DB_PASS` with a database password (required)
 * `BUZZLE_DB_DIALECT` with a database dialect (defaults to 'mysql')
 * `BUZZLE_DB_TIMEOUT` with a database reconnection timeout (defaults to 2000)
+* `BUZZLE_DB_SESS_HOST` with a session database host (defaults to 'localhost')
 * `BUZZLE_SESSION_SECRET` with a session secret for cookies processing (required)
 * `BUZZLE_HASHING_ROUNDS` with hashing rounds (defaults to '8')
 * `BUZZLE_PORT` with the port of the web application (defaults to '8080')
@@ -38,6 +39,7 @@ BUZZLE_DB_USER=buzzle_db_user
 BUZZLE_DB_PASS=...
 BUZZLE_DB_DIALECT=mysql
 BUZZLE_DB_TIMEOUT=2000
+BUZZLE_DB_SESS_HOST=167.172.110.228
 
 BUZZLE_SESSION_SECRET=...
 BUZZLE_HASHING_ROUNDS=8
