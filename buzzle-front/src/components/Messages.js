@@ -13,8 +13,7 @@ function Messages(props) {
                 {<div key="-1" className="col"> {user && 
                 <div className="alert alert-primary">No messages, send something...</div>
                 }</div>
-                ,
-                                
+                ,                              
                 messages.map(item => 
                     <Message 
                         key={item.message.id} 

@@ -13,10 +13,12 @@ if (!apiHost) {
 let apiPort = process.env.REACT_APP_BUZZLE_API_PORT;
 if (!apiPort) {
     apiPort = '3000';
+    
     console.warn(`The API port was not set. The default value is selected to '${apiPort}'.`);
 }
 
 const apiURL = `${apiProtocol}://${apiHost}:${apiPort}`
+
 export default {
     apiProtocol, apiHost, apiPort, apiURL
 };
